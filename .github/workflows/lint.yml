@@ -1,0 +1,38 @@
+---
+name: lint
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+
+      - name: Install Make
+        run: |
+          sudo apt-get install -y make
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          poetry --version
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Run linters
+        run: |
+          make lint
