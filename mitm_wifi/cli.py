@@ -77,4 +77,4 @@ def exec():
 
 
 if __name__ == "__main__":
-    typer()
+    exec()
