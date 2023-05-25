@@ -209,6 +209,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "pyroute2"
+version = "0.7.8"
+description = "Python Netlink library"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+win-inet-pton = {version = "*", markers = "platform_system == \"Windows\""}
+
+[[package]]
 name = "pytest"
 version = "7.3.1"
 description = "pytest: simple powerful testing with Python"
@@ -283,10 +294,18 @@ category = "main"
 optional = false
 python-versions = ">=3.7"
 
+[[package]]
+name = "win-inet-pton"
+version = "1.1.0"
+description = "Native inet_pton and inet_ntop implementation for Python on Windows (with ctypes)."
+category = "main"
+optional = false
+python-versions = "*"
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "01cb6ee988cf5992485003d5d3a36c67c74adbd30c28fa5f8c362cac10d2d4dc"
+content-hash = "16a409a74ee7563136f474d59dc989f5864db0940a4143cef18c7f5f215836da"
 
 [metadata.files]
 black = [
@@ -494,6 +513,10 @@ pyflakes = [
     {file = "pyflakes-3.0.1-py2.py3-none-any.whl", hash = "sha256:ec55bf7fe21fff7f1ad2f7da62363d749e2a470500eab1b555334b67aa1ef8cf"},
     {file = "pyflakes-3.0.1.tar.gz", hash = "sha256:ec8b276a6b60bd80defed25add7e439881c19e64850afd9b346283d4165fd0fd"},
 ]
+pyroute2 = [
+    {file = "pyroute2-0.7.8-py3-none-any.whl", hash = "sha256:346a266d0eba8489ac7667a2d9565443a3d380a0132a6e14895677cd22052ba7"},
+    {file = "pyroute2-0.7.8.tar.gz", hash = "sha256:989447434f17cb20fd92fc1f155f0bc6a4682abf611fde2a7ac95a61e7777ffd"},
+]
 pytest = [
     {file = "pytest-7.3.1-py3-none-any.whl", hash = "sha256:3799fa815351fea3a5e96ac7e503a96fa51cc9942c3753cda7651b93c1cfa362"},
     {file = "pytest-7.3.1.tar.gz", hash = "sha256:434afafd78b1d78ed0addf160ad2b77a30d35d4bdf8af234fe621919d9ed15e3"},
@@ -517,4 +540,8 @@ typer = [
 typing-extensions = [
     {file = "typing_extensions-4.5.0-py3-none-any.whl", hash = "sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4"},
     {file = "typing_extensions-4.5.0.tar.gz", hash = "sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb"},
+]
+win-inet-pton = [
+    {file = "win_inet_pton-1.1.0-py2.py3-none-any.whl", hash = "sha256:eaf0193cbe7152ac313598a0da7313fb479f769343c0c16c5308f64887dc885b"},
+    {file = "win_inet_pton-1.1.0.tar.gz", hash = "sha256:dd03d942c0d3e2b1cf8bab511844546dfa5f74cb61b241699fa379ad707dea4f"},
 ]

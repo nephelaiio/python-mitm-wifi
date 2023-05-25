@@ -16,6 +16,7 @@ pyudev = "^0.24.1"
 typer = "^0.9.0"
 jinja2 = "^3.1.2"
 netaddr = "^0.8.0"
+pyroute2 = "^0.7.8"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
