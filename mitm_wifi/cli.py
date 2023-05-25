@@ -1,29 +1,47 @@
 #!/usr/bin/env python
 
 import os
-import sys
-import pyudev
+import time
+import subprocess
 import typer
+import pyudev  # type: ignore
 
 from typing_extensions import Annotated
 
-from .packages import install, configure, start_hostapd, start_dnsmasq
+from .packages import (
+    install,
+    configure,
+    start_hostapd,
+    start_dnsmasq,
+    stop_hostapd,
+    stop_dnsmasq,
+)
 from .handlers import flush as flush_handlers
-from .util import run
 from .logger import logger
+
+connected = False
+finished = False
 
 
 def configure_device(action, device, network, ssid, password):
+    global finished
+    global connected
     if device.device_type == "wlan":
         if action == "move":
             iface = device["INTERFACE"]
             logger.info(f"{action} {iface}")
             start_hostapd(iface, ssid, password)
             start_dnsmasq(iface, network)
+            subprocess.Popen(["wireshark", "-i", iface])
+            connected = True
         elif action == "remove":
             iface = device["INTERFACE"]
             logger.info(f"{action} {iface}")
-            flush_handlers()
+            if connected:
+                finished = True
+            else:
+                stop_hostapd(iface)
+                stop_dnsmasq(iface)
         else:
             logger.debug(f"Unknown action: {action}")
     else:
@@ -66,8 +84,9 @@ def main(
     install()
     configure()
     observer = monitor(network, ssid, password)
-    print("Press Enter to quit ...")
-    input()
+    print("Insert WiFi adapter to continue ...")
+    while not finished:
+        time.sleep(1)
     observer.stop()
     flush_handlers()
 
