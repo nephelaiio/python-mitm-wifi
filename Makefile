@@ -27,9 +27,9 @@ types:
 	@poetry run stubgen mitm_wifi
 
 run:
-	@sudo pipx run --no-cache --spec ./ mitm_wifi
+	@sudo pipx run --no-cache --spec ./ mitm
 
 debug:
-	@sudo pipx run --no-cache --spec ./ mitm_wifi --verbose
+	@sudo pipx run --no-cache --spec ./ mitm --verbose
 
 # end

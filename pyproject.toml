@@ -8,7 +8,7 @@ readme = "README.md"
 packages = [{include = "mitm_wifi"}]
 
 [tool.poetry.scripts]
-mitm_wifi = "mitm_wifi.cli:exec"
+mitm = "mitm_wifi.cli:exec"
 
 [tool.poetry.dependencies]
 python = "^3.9"
