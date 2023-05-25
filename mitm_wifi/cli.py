@@ -32,7 +32,11 @@ def configure_device(action, device, network, ssid, password):
             logger.info(f"{action} {iface}")
             start_hostapd(iface, ssid, password)
             start_dnsmasq(iface, network)
-            subprocess.Popen(["wireshark", "-i", iface])
+            subprocess.Popen(
+                ["wireshark", "-i", iface, "-k"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
             connected = True
         elif action == "remove":
             iface = device["INTERFACE"]
