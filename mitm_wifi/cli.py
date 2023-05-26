@@ -3,10 +3,8 @@
 import os
 import time
 import subprocess
-import typer
+import click
 import pyudev  # type: ignore
-
-from typing_extensions import Annotated
 
 from .packages import (
     install,
@@ -65,18 +63,38 @@ def monitor(network: str, ssid: str, password: str):
     return observer
 
 
-def main(
-    ssid: Annotated[str, typer.Option("--ssid", help="WiFi network SSID")] = "mitm",
-    network: Annotated[
-        str, typer.Option("--network", help="WiFi network subnet")
-    ] = "192.168.127.0/24",
-    password: Annotated[
-        str, typer.Option("--password", help="WiFi network password")
-    ] = "12345678",
-    verbose: Annotated[
-        int, typer.Option("--verbose", "-v", help="Increase verbosity", count=True)
-    ] = False,
-):
+@click.command()
+@click.option(
+    "--ssid",
+    help="WiFi network SSID",
+    envvar="MITM_SSID",
+    default="mitm",
+    show_default=True,
+    type=click.STRING,
+)
+@click.option(
+    "--network",
+    help="WiFi network subnet",
+    envvar="MITM_NETWORK",
+    default="192.168.127.0/24",
+    type=click.STRING,
+)
+@click.option(
+    "--password",
+    help="WiFi network password",
+    envvar="MITM_PASSWORD",
+    default="12345678",
+    show_default=False,
+    type=click.STRING,
+)
+@click.option(
+    "--verbose",
+    "-v",
+    count=True,
+    help="Increase verbosity (specify multiple times for more)",
+    type=click.INT,
+)
+def main(ssid: str, network: str, password: str, verbose: int):
     if verbose == 1:
         logger.setLevel("INFO")
     elif verbose > 1:
@@ -88,16 +106,12 @@ def main(
     install()
     configure()
     observer = monitor(network, ssid, password)
-    print("Insert WiFi adapter to continue ...")
+    print("Insert WiFi adapter to configure ...")
     while not finished:
         time.sleep(1)
     observer.stop()
     flush_handlers()
 
 
-def exec():
-    typer.run(main)
-
-
 if __name__ == "__main__":
-    exec()
+    main()
