@@ -26,6 +26,9 @@ test:
 types:
 	@poetry run stubgen mitm_wifi
 
+help:
+	@poetry run mitm --help
+
 run:
 	@sudo -E pipx run --no-cache --spec ./ mitm
 
