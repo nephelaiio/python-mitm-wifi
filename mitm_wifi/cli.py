@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 import os
-import time
+import random
 import subprocess
-import click
+import time
+import click  # type: ignore
 import pyudev  # type: ignore
 
 from .packages import (
@@ -83,7 +84,7 @@ def monitor(network: str, ssid: str, password: str):
     "--password",
     help="WiFi network password",
     envvar="MITM_PASSWORD",
-    default="12345678",
+    default=random.randint(10000000, 99999999),
     show_default=False,
     type=click.STRING,
 )
