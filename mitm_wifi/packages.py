@@ -60,6 +60,7 @@ def start_hostapd(iface: str, ssid: str = "mitm", password: str = "12345678"):
         """,
     )
     run(f"systemctl start {service_name}@{iface}")
+    print(f"Started hostapd, interface={iface}, ssid={ssid}, password={password}")
     add_handler(lambda: stop_hostapd(iface))
 
 
@@ -143,6 +144,7 @@ def start_dnsmasq(iface: str, ipaddr: str):
     run(iptables_rule_out(iface_in, iface_out))
     run(iptables_rule_in(iface_in, iface_out))
     run(iptables_rule_dhcp(iface_in))
+    print(f"Started dnsmasq, interface={iface}, address={ipaddr}, dhcp={iprange}")
     add_handler(lambda: stop_dnsmasq(iface_in))
 
 
