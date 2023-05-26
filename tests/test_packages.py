@@ -9,7 +9,7 @@ def test_install_mock(mocker):
     run = mocker.patch("mitm_wifi.util.run", return_value="success")
     importlib.reload(mitm_wifi.packages)
     mitm_wifi.packages.install()
-    run.assert_called_once_with(f"apt-get install -y hostapd dnsmasq")
+    run.assert_called_once_with(f"apt-get install -y wireshark hostapd dnsmasq")
 
 
 def test_configure_mock(mocker):
