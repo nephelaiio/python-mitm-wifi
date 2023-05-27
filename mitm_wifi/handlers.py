@@ -13,7 +13,9 @@ def clear():
 
 
 def flush():
-    return [handler() for handler in handlers]
+    results = [handler() for handler in handlers]
+    clear()
+    return results
 
 
 def get():
